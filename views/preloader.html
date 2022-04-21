@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<!-- landing14:04-->
+<head>
+	<!-- Basic need -->
+	<title>MovieSearch</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="">
+	<link rel="profile" href="#">
+    
+	<!--Google Auth-->
+	<meta name="google-signin-client_id" content="176501380133-u8aujoaj2u07gl51012v70gg6gpcjibq.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+	<!-- Mobile specific meta -->
+	<meta name=viewport content="width=device-width, initial-scale=1">
+	<meta name="format-detection" content="telephone-no">
+
+	<!-- CSS files -->
+	<link rel="stylesheet" href="ui/css/plugins.css">
+	<link rel="stylesheet" href="ui/css/style.css">
+
+</head>
+
+<body>
+<!--preloading-->
+<div id="preloader">
+    <img class="logo" src="ui/images/logo1.png" alt="" width="119" height="58">
+    <div id="status">
+        <span></span>
+        <span></span>
+    </div>
+</div>
+<!--end of preloading-->
+
+<script>
+	refreshToken();
+	function refreshToken(){
+    	//every 30 seconds refresh access token
+    	fetch("/refreshAccessToken", {"method": "POST", "headers": {"content-type": "application/json"}, "body": JSON.stringify({"refreshToken": localStorage.getItem("ref-jwt-cookie")}) }).then(a=>a.json()).then(console.log);
+        //setTimeout(refreshToken, 3598000);
+    } 
+</script>
+
+</body>
+
+<!-- landing14:38-->
+</html>

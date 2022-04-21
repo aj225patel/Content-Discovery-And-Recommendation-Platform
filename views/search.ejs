@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search Movies</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/typesense@latest/dist/typesense.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <!--Google Font-->
+    <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Dosis:400,700,500|Nunito:300,400,600' />
+	  <!-- Mobile specific meta -->
+	  <meta name=viewport content="width=device-width, initial-scale=1">
+	  <meta name="format-detection" content="telephone-no">
+
+	  <!-- CSS files -->
+	  <link rel="stylesheet" href="ui/css/plugins.css">
+	  <link rel="stylesheet" href="ui/css/style.css">
+    <link rel="stylesheet" href="ui/css/rangeslider.css">
+
+</head>
+
+<body>
+<!--preloading-->
+<div id="preloader">
+  <img class="logo" src="ui/images/20220408_201628.png" alt="" width="119" height="58">
+  <div id="status">
+      <span></span>
+      <span></span>
+  </div>
+</div>
+<!--end of preloading-->
+
+<!--sign out form popup-->
+<div class="login-wrapper"  id="signup-content">
+  <a href="#" class="close">x</a>
+  <div class="login-content">
+      <h3><%= user.name %></h3>
+      <div class="row" style="margin-bottom: 10px;">
+        <h6><%= user.email %></h6>
+      </div>
+        
+      <div class="row">
+        <button id="sign-out-button"><span style="color: white;"> Sign Out</span></button>
+      </div>
+        <!--<button><a href="/logout"><span> Sign Out</span></a></button>-->
+  </div>
+</div>
+<!--end of sign out form popup-->
+
+<!-- BEGIN | Header -->
+<header class="ht-header">
+	<div class="container">
+		<nav class="navbar navbar-default navbar-custom">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header logo">
+				    <div class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					    <span class="sr-only">Toggle navigation</span>
+					    <div id="nav-icon1">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+				    </div>
+				    <a href="index_light.html"><img class="logo" src="ui/images/20220407_232252.png" alt="" width="119" height="58"></a>
+			    </div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse flex-parent" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav flex-child-menu menu-left">
+						<li class="hidden">
+							<a href="#page-top"></a>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown">
+							Home <i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="index_light.html">Home 01</a></li>
+								<li><a href="homev2_light.html">Home 02</a></li>
+								<li><a href="homev3_light.html">Home 03</a></li>
+							</ul>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+							movies<i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+							<ul class="dropdown-menu level1">
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown" >Movie grid<i class="ion-ios-arrow-forward"></i></a>
+									<ul class="dropdown-menu level2">
+										<li><a href="moviegrid_light.html">Movie grid</a></li>
+										<li><a href="moviegridfw_light.html">movie grid full width</a></li>
+									</ul>
+								</li>			
+								<li><a href="movielist_light.html">Movie list</a></li>
+								<li><a href="moviesingle_light.html">Movie single</a></li>
+								<li class="it-last"><a href="seriessingle_light.html">Series single</a></li>
+							</ul>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+							celebrities <i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="celebritygrid01_light.html">celebrity grid 01</a></li>
+								<li><a href="celebritygrid02_light.html">celebrity grid 02 </a></li>
+								<li><a href="celebritylist_light.html">celebrity list</a></li>
+								<li class="it-last"><a href="celebritysingle_light.html">celebrity single</a></li>
+							</ul>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+							news <i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="bloglist_light.html">blog List</a></li>
+								<li><a href="bloggrid_light.html">blog Grid</a></li>
+								<li class="it-last"><a href="blogdetail_light.html">blog Detail</a></li>
+							</ul>
+						</li>
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+							community <i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="userfavoritegrid_light.html">user favorite grid</a></li>
+								<li><a href="userfavoritelist_light.html">user favorite list</a></li>
+								<li><a href="userprofile_light.html">user profile</a></li>
+								<li class="it-last"><a href="userrate_light.html">user rate</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="nav navbar-nav flex-child-menu menu-right">
+						<li class="dropdown first">
+							<a class="btn btn-default dropdown-toggle lv1" data-toggle="dropdown" data-hover="dropdown">
+							pages <i class="fa fa-angle-down" aria-hidden="true"></i>
+							</a>
+							<ul class="dropdown-menu level1">
+								<li><a href="landing.html">Landing</a></li>
+								<li><a href="404.html">404 Page</a></li>
+								<li class="it-last"><a href="comingsoon.html">Coming soon</a></li>
+							</ul>
+						</li>                
+						<li><a href="#">Help</a></li>
+						<!--<li class="loginLink"><a href="#">LOG In</a></li>-->
+						<li class="btn signupLink"><img src="<%= user.picture %>" referrerpolicy="no-referrer" alt="" height="35" width="35" style="border-radius: 50%;"></li>
+					</ul>
+				</div>
+			<!-- /.navbar-collapse -->
+	    </nav>
+	    
+	    <!-- top search form -->
+      
+	    <div class="top-search">
+	    	<select>
+				  <option value="united">TV show</option>
+				  <option value="saab">Others</option>
+			  </select>
+			  <input type="search" id="search-text" placeholder="Search for a movie, TV Show or celebrity that you are looking for">
+	    </div>
+      
+	</div>
+</header>
+<!-- END | Header -->
+
+<div class="buster-light">
+  <div class="hero common-hero">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="hero-ct">
+            <h1> movie search</h1>
+            <ul class="breadcumb">
+              <li class="active"><a href="/">Home</a></li>
+              <li> <span class="ion-ios-arrow-right"></span> movie search</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-single">
+    <div class="container">
+      <div class="row ipad-width">
+        <div class="col-md-8 col-sm-12 col-xs-12">
+          <div class="topbar-filter">
+            <p id="found">Found: </p>
+            <label>Sort by:</label>
+            <select id="sorting" onchange="searchMovie(1)">
+              <option value="popularity:desc,_text_match:desc,rating:desc" style="color: white;">Popularity</option>
+              <option value="rating:desc,_text_match:desc,popularity:desc" style="color: white;">Rating Score</option>
+              <option value="original_release_year:desc,_text_match:desc,rating:desc" style="color: white;">Release Year(Newest)</option>
+              <option value="original_release_year:asc,_text_match:desc,popularity:desc" style="color: white;">Release Year(Oldest)</option>
+            </select>
+            <a href="movielist.html" class="list"><i class="ion-ios-list-outline "></i></a>
+            <a  href="moviegrid.html" class="grid"><i class="ion-grid active"></i></a>
+          </div>
+          <div class="flex-wrap-movielist" id="movieCard">
+              <!--
+              <div class="movie-item-style-2 movie-item-style-1">
+                <img src="images/uploads/mv1.jpg" alt="">
+                <div class="hvr-inner">
+                        <a  href="moviesingle.html"> Read more <i class="ion-android-arrow-dropright"></i> </a>
+                </div>
+                <div class="mv-item-infor">
+                  <h6><a href="#">oblivion</a></h6>
+                  <p class="rate"><i class="ion-android-star"></i><span>8.1</span> /10</p>
+                </div>
+              </div>   
+              -->     
+          </div>		
+          <div class="topbar-filter">
+            <label>Movies per page:</label>
+            <select id="movies-per-page" onchange="searchMovie(1)">
+              <option value="16" style="color: aliceblue;">16 Movies</option>
+              <option value="12" style="color: aliceblue;">12 Movies</option>
+              <option value="20" style="color: aliceblue;">20 Movies</option>
+            </select>
+            
+            <div class="pagination2">
+              
+              <!--<span>Page:</span>-->
+              <ul>
+                
+              </ul> 
+              <!--
+              <button class="active" href="#">1</button>
+              <button id="2" value="2">2</button>
+              <button id="3" value="3">3</button>
+              <button id="4" value="4">...</button>
+              <button id="78" value="78">78</button>
+              <button id="79" value="79">79</button>
+              <button ><i class="ion-arrow-right-b"></i></button>
+              -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12">
+          <div class="sidebar">
+            <div class="searh-form">
+              <h4 class="sb-title">Advanced Search</h4>
+              <!--<form class="form-style-1" action="#" id="search-form">-->
+              <form class="form-style-1" id="search-form">
+                <div class="row">
+                  <div class="col-md-12 form-it">
+                    <label>Movie name</label>
+                    <input id="search" type="text" placeholder="Looking For Movies? Just Search It">
+                  </div>
+                  <div class="col-md-12 form-it">
+                    <label>Genres & Subgenres</label>
+                    <div class="group-ip">
+                      <select name="skills" multiple="" class="ui fluid dropdown">
+                        <option value="">Enter to filter genres</option>
+                        <option value="1">Action & Adventure</option>
+                        <option value="14">Science-Fiction</option>
+                        <option value="13">Romance</option>
+                        <option value="9">Horror</option>
+                        <option value="2">Animation</option>
+                        <option value="3">Comedy</option>
+                        <option value="12">Mystery & Thriller</option>
+                        <option value="6">Drama</option>
+                        <option value="4">Crime</option>
+                        <option value="5">Documentary</option>
+                        <option value="7">Fantasy</option>
+                        <option value="8">History</option>
+                        <option value="10">Kids & Family</option>
+                        <option value="11">Music & Musical</option>
+                        <option value="15">Sport</option>
+                        <option value="16">War & Military</option>
+                        <option value="17">Western</option>
+                        <option value="18">Reality TV</option>
+                        <option value="19">Made in Europe</option>
+                      </select>
+                    </div>	
+                  </div>
+                  <div class="col-md-12 form-it">
+                    <label>Rating Range</label>
+                    <!--
+                    <select>
+                      <option value="range">-- Select the rating range below --</option>
+                      <option value="saab">-- Select the rating range below --</option>
+                    </select>
+                    -->
+
+                    <div class="range">
+                      <div class="sliderValue">
+                        <span id="current">0</span>
+                      </div>
+                      <div class="field">
+                        <div class="value left">0</div>
+                        <input id="input-slider" type="range" min="0" max="10" value="0" step="0.1">
+                        <div class="value right">10</div>
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-12 form-it">
+                    <label>Release Year</label>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <!--
+                        <select id="from">
+                          <option value="range">From</option>
+                          <option value="number">10</option>
+                        </select>
+                        -->
+                        <input id="from" type="number" min="1878" max="2099" step="1" value="1878"/>
+                      </div>
+                      <div class="col-md-6">
+                        <!--
+                        <select id="to">
+                          <option value="range">To</option>
+                          <option value="number">20</option>
+                        </select>
+                        -->
+                        <input id="to" type="number" min="1878" max="2099" step="1" value="2099"/>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 ">
+                    <input class="submit" type="submit" value="Search">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <!--
+            <div class="ads">
+              <img src="ui/images/uploads/ads1.png" alt="">
+            </div>
+          
+            <div class="sb-facebook sb-it">
+              <h4 class="sb-title">Find us on Facebook</h4>
+              <iframe src="#" data-src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ftemplatespoint.net%2F%3Ffref%3Dts&tabs=timeline&width=340&height=315px&small_header=true&adapt_container_width=false&hide_cover=false&show_facepile=true&appId"  height="315" style="width:100%;border:none;overflow:hidden" ></iframe>
+            </div>
+            -->
+            <!--
+            <div class="sb-twitter sb-it">
+              <h4 class="sb-title">Tweet to us</h4>
+              <div class="slick-tw">
+                <div class="tweet item" id="Put your twiter id here"></div>
+                <div class="tweet item" id="Put your 2nd twiter account id here"></div>
+              </div>					
+            </div>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- footer section-->
+<footer class="ht-footer">
+	<div class="container">
+		<div class="flex-parent-ft">
+			<div class="flex-child-ft item1">
+				 <a href="index-2.html"><img class="logo" src="ui/images/20220407_225727.png" alt=""></a>
+				 <p>5th Avenue st, manhattan<br>
+				New York, NY 10001</p>
+				<p>Call us: <a href="#">(+01) 202 342 6789</a></p>
+			</div>
+			<div class="flex-child-ft item2">
+				<h4>Resources</h4>
+				<ul>
+					<li><a href="#">About</a></li> 
+					<li><a href="#">Blockbuster</a></li>
+					<li><a href="#">Contact Us</a></li>
+					<li><a href="#">Forums</a></li>
+					<li><a href="#">Blog</a></li>
+					<li><a href="#">Help Center</a></li>
+				</ul>
+			</div>
+			<div class="flex-child-ft item3">
+				<h4>Legal</h4>
+				<ul>
+					<li><a href="#">Terms of Use</a></li> 
+					<li><a href="#">Privacy Policy</a></li>	
+					<li><a href="#">Security</a></li>
+				</ul>
+			</div>
+			<div class="flex-child-ft item4">
+				<h4>Account</h4>
+				<ul>
+					<li><a href="#">My Account</a></li> 
+					<li><a href="#">Watchlist</a></li>	
+					<li><a href="#">Collections</a></li>
+					<li><a href="#">User Guide</a></li>
+				</ul>
+			</div>
+			<div class="flex-child-ft item5">
+				<h4>Newsletter</h4>
+				<p>Subscribe to our newsletter system now <br> to get latest news from us.</p>
+				<form action="#">
+					<input type="text" placeholder="Enter your email...">
+				</form>
+				<a href="#" class="btn">Subscribe now <i class="ion-ios-arrow-forward"></i></a>
+			</div>
+		</div>
+	</div>
+	<div class="ft-copyright">
+		<div class="ft-left">
+			<p><a target="_blank" href="https://www.templateshub.net">Templates Hub</a></p>
+		</div>
+		<div class="backtotop">
+			<p><a href="#" id="back-to-top">Back to top  <i class="ion-ios-arrow-thin-up"></i></a></p>
+		</div>
+	</div>
+</footer>
+<!-- end of footer section-->
+
+<script>
+
+  const btnLogout = document.getElementById("sign-out-button");
+  btnLogout.addEventListener("click", async e => {
+    const result = await fetch("/logout", {"method": "POST", headers: {"content-type": "application/json"}, body: JSON.stringify({"refreshToken": localStorage.getItem("ref-jwt-cookie")})})
+    const jResult = await result.json();
+    //alert(JSON.stringify(jResult));
+    window.localStorage.removeItem("ref-jwt-cookie");
+    window.location.reload();
+  });
+
+  //refreshToken();
+  function refreshToken(){
+  //every 30 seconds refresh access token
+    fetch("/refreshAccessToken", {"method": "POST", "headers": {"content-type": "application/json"}, "body": JSON.stringify({"refreshToken": localStorage.getItem("ref-jwt-cookie")}) }).then(a=>a.json()).then(console.log)
+        setTimeout(refreshToken, 3598000);
+  } 
+</script>
+
+<!-- ==================================================================================================================================================================================================================== -->
+<script>
+	const slideValue = document.getElementById("current");
+	const inputSlider = document.getElementById("input-slider");
+	inputSlider.oninput = (()=>{
+	  let value = inputSlider.value;
+	  slideValue.textContent = value;
+	  slideValue.style.left = (value*10) + "%";
+	  slideValue.classList.add("show");
+	});
+	inputSlider.onblur = (()=>{
+	  slideValue.classList.remove("show");
+	});
+
+  var search_text = '<%- JSON.stringify(search_text) %>'.slice(1,-1);
+</script>
+<!-- ==================================================================================================================================================================================================================== -->
+
+<script>
+  const searchBar = document.getElementById("search-text");
+  
+  searchBar.addEventListener('search', () => {
+      const SearchText = document.getElementById("search-text").value;
+      console.log(SearchText);
+      
+      window.location.assign('/search/'.concat(SearchText));
+  });
+
+  var top_picks = `<%-  JSON.stringify( top_picks[0].title )  %>`.slice(1,-1);
+  console.log(top_picks);
+</script>
+
+<!-- ==================================================================================================================================================================================================================== -->
+
+<script src="src/searchHandler.js"></script>
+<script src="ui/js/jquery.js"></script>
+<script src="ui/js/plugins.js"></script>
+<script src="ui/js/plugins2.js"></script>
+<script src="ui/js/custom.js"></script>
+
+</body>
+</html>
+
+
+    <!--<h1>Hi <%= user.name %></h1>-->
+
+    <!--<div class="hero" style="background-image: url('user_auth/images/bg-01.jpg');"></div>-->
+<!--
+
+    <div class="site-mobile-menu">
+        <div class="site-mobile-menu-header">
+          <div class="site-mobile-menu-close mt-3">
+            <span class="icon-close2 js-menu-toggle"></span>
+          </div>
+        </div>
+        <div class="site-mobile-menu-body"></div>
+    </div>
+      
+    <header class="site-navbar" role="banner">
+  
+        <div class="container">
+          <div class="row align-items-center">
+            
+            <div class="col-11 col-xl-2">
+              <h1 class="mb-0 site-logo"><a href="#" class="text-white mb-0"><img src="landing_main/website-menu-03/images/logo.png" alt="" height="60" width="60"></a></h1>
+            </div>
+            <div class="col-12 col-md-10 d-none d-xl-block">
+              <nav class="site-navigation position-relative text-right" role="navigation">
+  
+                <ul class="site-menu js-clone-nav mr-auto d-none d-lg-block">
+                  <li class="active" style="color: #4272d7;"><a href="#"><span>Movie Search</span></a></li>
+                  <li class="has-children">
+                    <img src="<%= user.picture %>" alt="" height="50" width="50" style="border-radius: 50%;">
+                    <ul class="dropdown arrow-top">
+                      <li><span><%= user.name %></span></li>
+                      <li><a href="/logout"><span> Sign Out</span></a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+  
+  
+            <div class="d-inline-block d-xl-none ml-md-0 mr-auto py-3" style="position: relative; top: 3px;"><a href="#" class="site-menu-toggle js-menu-toggle text-white"><span class="icon-menu h3"></span></a></div>
+  
+            </div>
+  
+          </div>
+        </div>
+        
+    </header>
+  
+    <div class="s131">
+        <form id="search-form">
+          <div class="inner-form">
+            <div class="input-field first-wrap">
+              <input id="search" type="text" placeholder="Looking for movies? Just search it" />
+            </div>
+            <div class="input-field second-wrap">
+              <div class="input-select">
+                <select data-trigger="" name="choices-single-defaul">
+                  <option placeholder="">CATEGORY</option>
+                  <option>Subject A</option>
+                  <option>Subject B</option>
+                  <option>Subject C</option>
+                </select>
+              </div>
+            </div>
+            <div class="input-field third-wrap">
+              <button class="btn-search" type="submit">SEARCH</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="buster-light">
+        <div class="page-single">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div id="movieCard" class="flex-wrap-movielist mv-grid-fw">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>          
+
+      
+  
+      <script src="landing_main/colorlib-search-24/js/extention/choices.js"></script>
+      <script>
+        const choices = new Choices('[data-trigger]',
+        {
+          searchEnabled: false
+        });
+  
+      </script>
+      <script src="src/searchHandler.js"></script>
+      <script src="landing_main/website-menu-03/js/jquery-3.3.1.min.js"></script>
+      <script src="landing_main/website-menu-03/js/popper.min.js"></script>
+      <script src="landing_main/website-menu-03/js/bootstrap.min.js"></script>
+      <script src="landing_main/website-menu-03/js/jquery.sticky.js"></script>
+      <script src="landing_main/website-menu-03/js/main.js"></script>
+-->
